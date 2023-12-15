@@ -6,3 +6,4 @@ Makefile.local
 .idea/
 *.log
 .DS_Store
+config.yaml
