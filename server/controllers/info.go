@@ -127,6 +127,9 @@ type HomeModel struct {
 // Capabilities 获取 AI 平台的能力列表
 func (ctl *InfoController) Capabilities(ctx context.Context, webCtx web.Context, user *auth.UserOptional, client *auth.ClientInfo) web.Response {
 	enableOpenAI, homeModels := ctl.loadHomeModels(ctx, ctl.conf, client, user)
+	fmt.Println("")
+	fmt.Println("122345678908765")
+	fmt.Println("")
 	return webCtx.JSON(web.M{
 		// 是否启用苹果 App 支付
 		"applepay_enabled": ctl.conf.EnableApplePay,

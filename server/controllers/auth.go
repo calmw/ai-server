@@ -40,8 +40,8 @@ type AuthController struct {
 	translater youdao.Translater `autowire:"@"`
 	limiter    *rate.RateLimiter `autowire:"@"`
 	tk         *token.Token      `autowire:"@"`
-	rds        *redis.Client   `autowire:"@"`
-	userRepo   *repo2.UserRepo `autowire:"@"`
+	rds        *redis.Client     `autowire:"@"`
+	userRepo   *repo2.UserRepo   `autowire:"@"`
 }
 
 func NewAuthController(resolver infra.Resolver, conf *config.Config) web.Controller {
@@ -164,35 +164,36 @@ func (ctl *AuthController) signInOrUpWithSMSCode(ctx context.Context, webCtx web
 		}
 	}
 
-	verifyCodeId := strings.TrimSpace(webCtx.Input("verify_code_id"))
-	if verifyCodeId == "" {
-		return webCtx.JSONError(common.Text(webCtx, ctl.translater, "验证码 ID 不能为空"), http.StatusBadRequest)
-	}
+	//verifyCodeId := strings.TrimSpace(webCtx.Input("verify_code_id"))
+	//if verifyCodeId == "" {
+	//	return webCtx.JSONError(common.Text(webCtx, ctl.translater, "验证码 ID 不能为空"), http.StatusBadRequest)
+	//}
+	//
+	//verifyCode := strings.TrimSpace(webCtx.Input("verify_code"))
+	//if verifyCode == "" {
+	//	return webCtx.JSONError(common.Text(webCtx, ctl.translater, "验证码不能为空"), http.StatusBadRequest)
+	//}
+	//
+	//// 检查验证码是否正确
+	//realVerifyCode, err := ctl.rds.Get(ctx, fmt.Sprintf("auth:verify-code:%s:%s", verifyCodeId, username)).Result()
+	//if err != nil {
+	//	if err != redis.Nil {
+	//		log.WithFields(log.Fields{
+	//			"username": username,
+	//			"id":       verifyCodeId,
+	//			"code":     verifyCode,
+	//		}).Errorf("failed to get email code: %s", err)
+	//	}
+	//	return webCtx.JSONError(common.Text(webCtx, ctl.translater, "验证码已过期，请重新获取"), http.StatusBadRequest)
+	//}
+	//
+	//if realVerifyCode != verifyCode {
+	//	return webCtx.JSONError(common.Text(webCtx, ctl.translater, "验证码错误"), http.StatusBadRequest)
+	//}
+	//
+	//_ = ctl.rds.Del(ctx, fmt.Sprintf("auth:verify-code:%s:%s", verifyCodeId, username)).Err()
 
-	verifyCode := strings.TrimSpace(webCtx.Input("verify_code"))
-	if verifyCode == "" {
-		return webCtx.JSONError(common.Text(webCtx, ctl.translater, "验证码不能为空"), http.StatusBadRequest)
-	}
-
-	// 检查验证码是否正确
-	realVerifyCode, err := ctl.rds.Get(ctx, fmt.Sprintf("auth:verify-code:%s:%s", verifyCodeId, username)).Result()
-	if err != nil {
-		if err != redis.Nil {
-			log.WithFields(log.Fields{
-				"username": username,
-				"id":       verifyCodeId,
-				"code":     verifyCode,
-			}).Errorf("failed to get email code: %s", err)
-		}
-		return webCtx.JSONError(common.Text(webCtx, ctl.translater, "验证码已过期，请重新获取"), http.StatusBadRequest)
-	}
-
-	if realVerifyCode != verifyCode {
-		return webCtx.JSONError(common.Text(webCtx, ctl.translater, "验证码错误"), http.StatusBadRequest)
-	}
-
-	_ = ctl.rds.Del(ctx, fmt.Sprintf("auth:verify-code:%s:%s", verifyCodeId, username)).Err()
-
+	var err error
 	// 检查用户信息
 	var user *model.Users
 	if isPhoneNumber(username) {

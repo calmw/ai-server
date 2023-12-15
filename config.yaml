@@ -17,7 +17,7 @@ enable-migrate: true
 enable-websocket: false
 
 # 是否在日志中输出 SQL 语句
-debug-with-sql: false
+debug-with-sql: true
 
 # 是否启用 API Keys 功能 【该功能尚未完成】
 # 该功能启用后，可以对外开放 OpenAI 兼容的 API，客户端也会显示 API Keys 管理界面
@@ -34,16 +34,16 @@ enable-model-rate-limit: false
 enable-custom-home-models: false
 
 # 数据库配置 (账号:密码@tcp(数据库地址:端口)/数据库名?charset=utf8mb4&parseTime=True&loc=Local)
-db-uri: "root:123456@tcp(localhost:3306)/aidea_server?charset=utf8mb4&parseTime=True&loc=Local"
+db-uri: "root:openai_api_backend_let_me_in@tcp(8.130.102.48:3306)/openai_api?charset=utf8mb4&parseTime=True&loc=Local"
 
 # Redis 配置
-redis-host: localhost
+redis-host: 8.130.102.48
 redis-port: 6379
-redis-password: "123456"
+redis-password: "openai_api_backend_redis_let_me_in"
 
 # 代理服务器
 # 如果启用了 xxx-autoproxy，则该选项必须
-socks5-proxy: 127.0.0.1:1080
+socks5-proxy: 127.0.0.1:1081
 # HTTP 代理放置，支持 http、https、socks5，代理类型由 URL schema 决定，如果 scheme 为空，则默认为 http
 # 注意：配置 proxy-url 后， socks5-proxy 配置失效
 proxy-url: ""
@@ -69,7 +69,7 @@ openai-organization: ""
 # OpenAI 服务地址，可以配置多个，用于负载均衡
 openai-servers: [ "https://api.openai.com/v1" ]
 # OpenAI API Key，可以配置多个，用于负载均衡
-openai-keys: [ "sk-xxxxxxxxxxxxxxxx" ]
+openai-keys: [ "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" ]
 
 # Azure OpenAI 服务配置
 #openai-azure: true
@@ -178,9 +178,9 @@ gpt360-apikey: ""
 
 # 支持的模型列表，当前支持：chatglm_turbo, chatglm_pro, chatglm_std, chatglm_lite, PaLM-2
 oneapi-support-models: []
-enable-oneapi: false
+enable-oneapi: true
 oneapi-server: ""
-oneapi-key: ""
+oneapi-key: "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"
 
 ######## DeepAI 配置 ########
 
